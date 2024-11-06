@@ -2,10 +2,12 @@
 public class Grille {    
     // Déclaration de la grille forme de tableau
     public StringBuilder grille[];
-// Declaration du constructeur avec un modele par default ( ici vide)
+// Constructeur Grille default
+// Declaration du constructeur avec un modele par default ( ici vide) 
     public Grille() {
        initGrille(grille0);
     }
+    // Constructeur modele definit Grille
 // Declaration du constructeur avec un modele defini. Le tableau en argument est envoyé a la methode initGrille
     public Grille(String uneGrille[]) {
         initGrille(uneGrille);
@@ -36,19 +38,23 @@ public class Grille {
         for (int i = 0; i < g.length; i++) 
             grille[i] = new StringBuilder(g[i]);
     }
+    // fonction reinitialiser grille
 // reinitialise la grille
     public void reinitGrille() {
         initGrille(grille0);
     }
+    // fonction remplacement  caractere
 // remplace un caractere
     public void remplacerCar(int y, int x, char c) {
         grille[y].setCharAt(x, c);
     }
+    // fonction Affichage de grille
 // Affiche la Grille
     public void affiche() {
         for (int i=0; i<grille.length; i++)
             System.out.println(grille[i]);    
     }
+    // Fonction comparatif de grille
 // Compare deux grilles
     public Boolean comparer(Grille g2) {
         for (int i=0; i<grille.length; i++)
