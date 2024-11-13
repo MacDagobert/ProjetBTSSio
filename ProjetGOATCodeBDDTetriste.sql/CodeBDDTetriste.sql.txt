@@ -3,9 +3,10 @@ DROP TABLE IF EXISTS joueurs;
 CREATE TABLE joueurs (
     id_joueur INT AUTO_INCREMENT NOT NULL,
     pseudo VARCHAR(50),
-    mail VARCHAR(50),
+    email VARCHAR(50),
     date_inscription DATE,
     password VARCHAR(24),
+    compteur INT,
     PRIMARY KEY (id_joueur)
 ) ENGINE=InnoDB;
 
