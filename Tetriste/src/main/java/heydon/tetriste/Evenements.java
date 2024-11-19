@@ -69,6 +69,7 @@ public class Evenements {
     public static void main(String[] args) {
      TimerTetriste timertetriste = new TimerTetriste();
         Evenements evenements = new Evenements();
+        
         JFrame frame = new JFrame("Test des événements clavier");
 
         frame.addKeyListener(new KeyAdapter() {        //Permet composant graphique de reagir evenement de pression 

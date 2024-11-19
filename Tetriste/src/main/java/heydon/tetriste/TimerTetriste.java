@@ -20,7 +20,7 @@ public class TimerTetriste implements ActionListener {
 
     JFrame frame = new JFrame(); //Cadre 
     JLabel timeLabel = new JLabel(); // Temps actuel
-    int elapsedTime = 1000; // Temps passé
+    int elapsedTime = 0; // Temps passé
     int seconds = 0;
     int minutes = 0;
     boolean started = false;
@@ -78,6 +78,7 @@ public class TimerTetriste implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        TimerTetriste timertetriste = new TimerTetriste();
     }
 
 }
