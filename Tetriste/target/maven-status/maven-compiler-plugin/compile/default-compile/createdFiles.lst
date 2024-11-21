@@ -1,7 +1,6 @@
-heydon\tetriste\Tetriste.class
-heydon\tetriste\Evenements$1.class
-heydon\tetriste\TimerTetriste$1.class
-heydon\tetriste\TimerTetriste$2.class
-heydon\tetriste\Grille.class
-heydon\tetriste\Evenements.class
-heydon\tetriste\TimerTetriste.class
+heydon\TimerTetriste.class
+heydon\Evenements$1.class
+heydon\Grille.class
+heydon\Evenements.class
+heydon\TimerTetriste$1.class
+heydon\Tetriste.class
