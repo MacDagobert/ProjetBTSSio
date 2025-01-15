@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille Test</title>
+    <style>
+        pre {
+            font-family: monospace; /* Utilise une police à largeur fixe pour le rendu */
+        }
+    </style>
+</head>
+<body>
+    <h1>Affichage de la Grille</h1>
+    <pre id="grille"></pre> <!-- Zone où la grille sera affichée -->
+
+    <script>
+        const grilleTest = [
+            "+---------------+",
+            "|               |",
+            "|               |",
+            "|               |",
+            "|               |",
+            "|          #    |",
+            "|               |",
+            "|               |",
+            "|               |",
+            "|               |",
+            "|               |",
+            "+---------------+"
+        ];
+
+        // Récupérer l'élément <pre> pour afficher la grille
+        const grilleElement = document.getElementById('grille');
+
+        // Joindre les lignes en une seule chaîne et l'afficher
+        grilleElement.textContent = grilleTest.join('\n');
+    </script>
+</body>
+</html>
+
+
+
+<script>let myImage = document.querySelector("img");
+
+    myImage.addEventListener("click", function () {
+      let mySrc = myImage.getAttribute("src");
+      if (mySrc === "../exo mozzila/Images/firefox-icon.png") {
+        myImage.setAttribute("src", "../exo mozzila/Images/firefox2.png");
+      } else {
+        myImage.setAttribute("src", "../exo mozzila/Images/firefox-icon.png"); //premier commentaire
+      }
+    });
+    </script>
+

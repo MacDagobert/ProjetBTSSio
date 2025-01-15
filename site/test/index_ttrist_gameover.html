@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../test/style.css">
+    <title>Ttrist</title>
+</head>
+
+<body>
+    <h1>Bienvenue chez Ttrist</h1>
+
+    <!-- Message de fin de jeu -->
+    <div id="gameOverMessage" style="display: none; color: red; font-weight: bold; text-align: center;">
+        Game Over
+    </div>
+
+    <!-- Zone où la grille sera affichée -->
+    <pre id="jeu"></pre>
+
+    <div class="main-container">
+        <div class="button-container">
+            <!-- Bouton Jouer en mode invité -->
+            <button id="btnConnexion" type="button" onclick="window.location.href='connexion.html'">
+                Jouer en mode invité
+            </button>
+
+            <!-- Bouton Se connecter / S'enregistrer -->
+            <button type="button" onclick="window.location.href='enregistrement.html'">
+                Se connecter / S'enregistrer
+            </button>
+        </div>
+    </div>
+
+    <!-- Inclusion du script JavaScript -->
+    <script src="../test/script_test.js"></script>
+</body>
+
+</html>
