@@ -4,6 +4,7 @@
  */
 package heydon;
 import javax.swing.*;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.KeyListener;
@@ -67,12 +68,12 @@ public class Evenements {
     }
 
     public static void main(String[] args) {
-        JFrame cadretimer = new JFrame();
-        TimerTetriste timertetriste = new TimerTetriste();
-        cadretimer.add(timertetriste);
+        JFrame cadretimer = new JFrame(); //Le Frame qui contient le JPanel qui contient le JLabel timer
+        TimerTetriste timertetriste = new TimerTetriste(); // Le Jpanel timer
+        cadretimer.add(timertetriste); // FUUUUUSIOOOOON
 
-        cadretimer.pack();
-        cadretimer.setVisible(true);
+        cadretimer.pack(); // le Jframe s'adapte au panel 
+        cadretimer.setVisible(true);// Pour afficher le tout
         timertetriste.starttimer();
         Evenements evenements = new Evenements();
 
