@@ -6,9 +6,11 @@ package heydon;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSetMetaData;
 import java.util.Random;
 import javax.swing.text.html.HTML;
 // Classe principale du jeu Tetris
+
 public class Tetriste extends JFrame {
 
     private static final int GRID_WIDTH = 10;
@@ -20,26 +22,56 @@ public class Tetriste extends JFrame {
     private int tetrominoX = 4, tetrominoY = 0; // Position du tetromino
 
     private TetrisPanel tetrisPanel; // Panel personnalisé pour le rendu
-
+    private TetrisPanel compteurPanel;
+    public int score ;
+    private JLabel resultat;
+    
+    
     public Tetriste() {
-        setTitle("Simple Tetris");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 600); // Définir une taille raisonnable
+        setTitle("Tetriste");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Définir une taille raisonnable
         setLocationRelativeTo(null);
+        
+        JPanel main = new JPanel(new BorderLayout());
+        FonctionImage fondPanel = new FonctionImage("C:/Users/Victor/Desktop/ProjetBTSSio/site/ttrist.jpg");
+        fondPanel.setLayout(new BorderLayout());
 
         currentTetromino = new Tetromino("I"); // Commencer avec une barre
 
         tetrisPanel = new TetrisPanel();
         tetrisPanel.setPreferredSize(new Dimension(GRID_WIDTH * BLOCK_SIZE, GRID_HEIGHT * BLOCK_SIZE));
-
-        add(tetrisPanel);
-
+        tetrisPanel.setOpaque(false);
+        tetrisPanel.setVisible(true);
+        
+        
+        main.add(tetrisPanel, BorderLayout.CENTER);
+       
+        
+        
+        JPanel compteurpanel = new JPanel();
+        fondPanel.setPreferredSize(new Dimension(100, 200));
+        JLabel infoLabel = new JLabel("Informations du jeu" );
+        resultat = new JLabel("Votre score : " + this.score );
+        fondPanel.setVisible(true);
+        fondPanel.add(infoLabel);
+        
+        fondPanel.add(resultat);
+        main.add(fondPanel , BorderLayout.NORTH);
+        
+        
+        add(main);
+        main.setVisible(true);
+        
+        setVisible(true);
+        
+        
         pack();
 
         // Timer pour faire descendre automatiquement le tetromino
         Timer timer = new Timer(500, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 moveTetrominoDown();
+                winpoint(1);
             }
         });
         timer.start();
@@ -106,6 +138,30 @@ public class Tetriste extends JFrame {
         }
     }
 
+    public void moveDown() { 
+        // Parcourir chaque colonne de gauche à droite
+        for (int x = 0; x < GRID_WIDTH; x++) {
+            // Parcourir chaque ligne du bas vers le haut (pour éviter de déplacer un bloc plusieurs fois)
+            for (int y = GRID_HEIGHT - 2; y >= 0; y--) {
+                // Vérifier s'il y a un bloc à la position actuelle et si la case en dessous est vide
+                if (grid[y][x] && !grid[y + 1][x]) {
+                    // Déplacer le bloc vers le bas
+                    grid[y + 1][x] = true; // Placer le bloc dans la case du dessous
+                    grid[y][x] = false;    // Vider la case actuelle
+
+                    // Afficher un message indiquant le déplacement
+                    System.out.println("Bloc déplacé vers le bas à la position (" + y + ", " + x + ")");
+                }
+            }
+        }
+    }
+
+    public void addScoreScreen( int addScoreValue){
+        score = score + addScoreValue;
+        System.err.println("toto");
+        resultat.setText("Votre score est égal à "+score);
+    }
+    
     // Vérifie si le mouvement est possible
     public boolean canMove(int newX, int newY) {
         for (int[] block : currentTetromino.getCurrentShape()) {
@@ -129,14 +185,38 @@ public class Tetriste extends JFrame {
         }
     }
 
-   
+    public void winpoint(int addScoreValue) {
+        // Parcourir toutes les lignes de la grille, de bas en haut
+        for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
+            // Supposer initialement que la ligne est remplie
+            boolean ligneRemplie = true;
 
+            // Vérifier chaque cellule de la ligne actuelle
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                // Si une cellule est vide (false), la ligne n'est pas remplie
+                if (!grid[y][x]) {
+                    ligneRemplie = false;
+                    // Sortir de la boucle interne, car on sait déjà que la ligne n'est pas remplie
+                    break;
+                }
+            }
+            if (ligneRemplie) {
+                System.out.println("Ligne remplie!");
+                //System.exit(0);
+                for (int x = 0; x < GRID_WIDTH; x++) {
+                    grid[y][x] = false;
+                }
+                moveDown();
+                addScoreScreen(addScoreValue);
+            }
+        }
+    }
     // Réinitialise le tetromino
+
     public void resetTetromino() {
         tetrominoX = 4;
         tetrominoY = 0;
-        
-        
+
         //currentTetromino = new Tetromino(Math.random() < 0.3 ? "I" : (Math.random() < 0.5 ? "O" : "L"));
         currentTetromino = Tetromino.getRandomTetromino();
 
@@ -158,7 +238,7 @@ public class Tetriste extends JFrame {
                 }
             }
 
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
 
             for (int[] block : currentTetromino.getCurrentShape()) {
                 int x = (tetrominoX + block[0]) * BLOCK_SIZE;
@@ -171,5 +251,6 @@ public class Tetriste extends JFrame {
     // Point d'entrée du programme
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Tetriste().setVisible(true));
+
     }
 }

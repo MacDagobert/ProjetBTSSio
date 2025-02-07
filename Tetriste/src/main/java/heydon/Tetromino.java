@@ -1,5 +1,6 @@
 package heydon;
 import java.util.Random;
+import javax.swing.text.html.HTML;
 
 // Classe représentant un tetromino (pièce de Tetris)
 
@@ -36,7 +37,7 @@ import java.util.Random;
         {{0, 0}, {1, 0}, {2, 0}, {1, 1}},
         {{1, 0}, {1, 1}, {0, 1}, {1, 2}},
         {{1, 0}, {1, 1}, {0, 1}, {2, 1}},
-        {{0, 0}, {1, 0}, {2, 0}, {2, 1}}
+        {{0, 0}, {1, 0}, {2, 0}, {1, 1}}
     };
 
     private static final int[][][] SHAPE_Z = {
