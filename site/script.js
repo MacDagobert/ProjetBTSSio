@@ -1,23 +1,25 @@
 console.log("Le fichier script.js est chargé");
+let score = 0;
+
 
 let grille = [
-    "+------------------------+",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "|                        |",
-    "+------------------------+"
+    "+--------------------------+",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "|                          |",
+    "+--------------------------+"
 ];
 
 let x = 11;
@@ -26,7 +28,7 @@ let ok = true;
 let pieceCourante;
 let rotationActuelle = 0;
 
-const BARRE = [
+const I = [
     [
         [0, 1, 0, 0],
         [0, 1, 0, 0],
@@ -52,7 +54,139 @@ const BARRE = [
         [0, 0, 0, 0]
     ]
 ];
+const J = [
+    [
+      [1, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0]
+    ],
+    [
+      [0, 1, 1],
+      [0, 1, 0],
+      [0, 1, 0]
+    ],
+    [
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 1]
+    ],
+    [
+      [0, 1, 0],
+      [0, 1, 0],
+      [1, 1, 0]
+    ]
+  ];
 
+  const L = [
+    [
+        [0, 0, 1],
+        [1, 1, 1],
+        [0, 0, 0]
+    ],
+    [
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 1]
+    ],
+    [
+        [0, 0, 0],
+        [1, 1, 1],
+        [1, 0, 0]
+    ],
+    [
+        [1, 1, 0],
+        [0, 1, 0],
+        [0, 1, 0]
+    ]
+];
+
+const O = [
+    [
+        [0, 1, 1, 0],
+        [0, 1, 1, 0],
+        [0, 0, 0, 0]
+    ]
+];
+
+const S = [
+    [
+        [0, 1, 1],
+        [1, 1, 0],
+        [0, 0, 0]
+    ],
+    [
+        [0, 1, 0],
+        [0, 1, 1],
+        [0, 0, 1]
+    ],
+    [
+        [0, 0, 0],
+        [0, 1, 1],
+        [1, 1, 0]
+    ],
+    [
+        [1, 0, 0],
+        [1, 1, 0],
+        [0, 1, 0]
+    ]
+];
+
+const Z = [
+    [
+        [1, 1, 0],
+        [0, 1, 1],
+        [0, 0, 0]
+    ],
+    [
+        [0, 0, 1],
+        [0, 1, 1],
+        [0, 1, 0]
+    ],
+    [
+        [0, 0, 0],
+        [1, 1, 0],
+        [0, 1, 1]
+    ],
+];
+
+    const T = [
+    [
+        [0, 1, 0],
+        [1, 1, 1],
+        [0, 0, 0]
+    ],
+    [
+        [0, 1, 0],
+        [0, 1, 1],
+        [0, 1, 0]
+    ],
+    [
+        [0, 0, 0],
+        [1, 1, 1],
+        [0, 1, 0]
+    ],
+    [
+        [0, 1, 0],
+        [1, 1, 0],
+        [0, 1, 0]
+    ]
+];
+
+function affichageTetrominos(forme) {
+    const tetrominos = Tetrominos[forme];
+    const container = document.getElementById('bloc');
+    for (let y = 0; y < tetrominos.length; y++) {
+        for (let x = 0; x < tetrominos[y].length; x++) {
+            if (tetrominos[y][x] === 1) {
+                const bloc = document.createElement('div');
+                bloc.style.gridRowStart = y + 1;
+                bloc.style.gridColumnStart = x + 1;
+                bloc.classList.add('tetromino');
+                container.appendChild(bloc);
+            }
+        }
+    }
+}
 
 function afficherGrille() {
     let grilleTemp = grille.map(row => row.slice());
@@ -116,13 +250,28 @@ function supprimerLignesPleines() {
             lignesSupprimees++;
         }
     }
+    
+    if (lignesSupprimees > 0) {
+        score += lignesSupprimees * 10; // 100 points par ligne
+        afficherScore(); // Met à jour l'affichage du score
+    }
+    
     return lignesSupprimees;
 }
 
+function afficherScore() {
+    document.getElementById("score").innerText = "Score : " + score;
+}
+
+
 
 function genererNouvellePiece() {
-    rotationActuelle = Math.floor(Math.random() * BARRE.length);
-    pieceCourante = BARRE[rotationActuelle];
+    const pieces = [I, J, L, O, S, T, Z];
+    const pieceChoisie = pieces[Math.floor(Math.random() * pieces.length)];
+    
+
+    rotationActuelle = Math.floor(Math.random() * pieceChoisie.length);
+    pieceCourante = pieceChoisie[rotationActuelle];
     x = Math.floor((grille[0].length - pieceCourante[0].length) / 2);
     y = 1;
     if (!mouvementValide(0, 0)) {
@@ -130,6 +279,7 @@ function genererNouvellePiece() {
         document.querySelector("#gameOverMessage").style.display = 'block';
     }
 }
+
 
 function deplacer(dx, dy) {
     if (!ok) return;
@@ -145,14 +295,27 @@ function deplacer(dx, dy) {
 }
 
 function rotatePiece() {
-    let nouvelleRotation = (rotationActuelle + 1) % 4;
-    let nouvellePiece = BARRE[nouvelleRotation];
+    // Correction : Vérification des index et de la syntaxe
+    let pieceActuelle = pieceCourante === I[rotationActuelle] ? I :
+                        pieceCourante === J[rotationActuelle] ? J :
+                        pieceCourante === L[rotationActuelle] ? L :
+                        pieceCourante === O[rotationActuelle] ? O : // Correction ici : 'rotationActuelle' au lieu de 'rotation Actuelle'
+                        pieceCourante === S[rotationActuelle] ? S :
+                        pieceCourante === T[rotationActuelle] ? T : Z;
+
+    let nouvelleRotation = (rotationActuelle + 1) % pieceActuelle.length;
+    let nouvellePiece = pieceActuelle[nouvelleRotation];
+
+    // Vérifie si le mouvement est valide avant d'appliquer la rotation
     if (mouvementValide(0, 0, nouvellePiece)) {
-        rotationActuelle = nouvelleRotation;
-        pieceCourante = nouvellePiece;
-        afficherGrille();
+        rotationActuelle = nouvelleRotation; // Met à jour la rotation actuelle
+        pieceCourante = nouvellePiece;      // Met à jour la pièce actuelle
+        afficherGrille();                   // Met à jour l'affichage
     }
 }
+
+
+
 
 
 document.addEventListener('keydown', (event) => {
@@ -179,5 +342,8 @@ function start() {
     afficherGrille();
     update();
 }
+
+afficherScore();
+
 
 start();
