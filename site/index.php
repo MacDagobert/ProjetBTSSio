@@ -33,10 +33,7 @@ require_once(__DIR__ . '/variables.php');
     </div>
 
     <script src="../site/script.js" defer></script>
-    <div id="bloc"></div>
     <div id="score">Score : 0</div>
-
-
 
 </body>
 
