@@ -216,6 +216,33 @@ const Z = [
     ]
 ];
 
+const P = [
+    [
+        [0, 0, 0, 0],
+        [0, 1, 0, 0],
+        [1, 1, 1, 0],
+        [0, 1, 0, 0]
+    ],
+    [
+        [0, 0, 0, 0],
+        [0, 1, 0, 0],
+        [1, 1, 1, 0],
+        [0, 1, 0, 0]
+    ],
+    [
+        [0, 0, 0, 0],
+        [0, 1, 0, 0],
+        [1, 1, 1, 0],
+        [0, 1, 0, 0]
+    ],
+    [
+        [0, 0, 0, 0],
+        [0, 1, 0, 0],
+        [1, 1, 1, 0],
+        [0, 1, 0, 0]
+    ]
+];
+
 
 function afficherGrille() {
     // Crée une copie profonde de la grille pour ne pas modifier l'originale
@@ -339,7 +366,7 @@ function afficherScore() {
 
 function genererNouvellePiece() {
     // Définit un tableau contenant toutes les formes de pièces possibles
-    const pieces = [I, O, L, T, S, J, Z];
+    const pieces = [I, O, L, T, S, J, Z, P];
 
     // Sélectionne aléatoirement une pièce parmi les formes disponibles
     const pieceAleatoire = pieces[Math.floor(Math.random() * pieces.length)];
@@ -390,7 +417,7 @@ function deplacer(dx, dy) {
 
 function rotatePiece() {
     // Définit un tableau contenant toutes les formes de pièces possibles
-    const pieces = [I, O, L, T, S, J, Z];
+    const pieces = [I, O, L, T, S, J, Z, P];
 
     // Trouve l'index de la pièce courante dans le tableau des pièces
     const currentPieceIndex = pieces.findIndex(piece => piece.includes(pieceCourante));
