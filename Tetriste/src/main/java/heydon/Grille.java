@@ -5,104 +5,96 @@
 package heydon;
 
 /**
- *
- * @author Heydon Simon
- * @class Grille
- * Crée la grille , l'affiche , crée une autre grille la compare
+ * Classe Grille représentant la grille du jeu Tetris.
+ * Elle gère l'état des cellules, la suppression des lignes complètes et la réinitialisation de la grille.
  */
+public class Grille {
+    // Constantes définissant la taille de la grille et des blocs
+    private static final int GRID_WIDTH = 10;  // Nombre de colonnes dans la grille
+    private static final int GRID_HEIGHT = 20; // Nombre de lignes dans la grille
+    private static final int BLOCK_SIZE = 30;  // Taille d'un bloc en pixels (pour l'affichage)
 
-public class Grille {    
-    // Déclaration de la grille forme de tableau
-    public StringBuilder grille[];
-// Constructeur Grille default
-// Declaration du constructeur avec un modele par default ( ici vide) 
-    public Grille() {
-       initGrille(grille0);
-    }
-    // Constructeur modele definit Grille
-// Declaration du constructeur avec un modele defini. Le tableau en argument est envoyé a la methode initGrille
-    public Grille(String uneGrille[]) {
-        initGrille(uneGrille);
-     }
-// modele par default utilisé si pas d'autres modele fourni
-    public String grille0[] = {
-     "+---------------+",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "|               |",
-     "+---------------+"
-     };
+    // Tableau 2D représentant l'état de la grille
+    // Chaque cellule est `true` si elle est occupée, `false` sinon
+    private boolean[][] grid = new boolean[GRID_HEIGHT][GRID_WIDTH];
 
-    // Initialisation de la grille , taille correspond au nombres de lignes.
-    //Chaque ligne du modele est copié dans ce nouveau tableau
-    // Attention faut que le nombre de ligne corresponde a grille0 , il faut une corrélation entre  les grilles. Sinon source erreur
-    public void initGrille(String g[]) {
-        grille = new StringBuilder[14];
-        for (int i = 0; i < g.length; i++) 
-            grille[i] = new StringBuilder(g[i]);
+    /**
+     * Retourne le nombre de colonnes dans la grille.
+     *
+     * @return Le nombre de colonnes (largeur de la grille)
+     */
+    public int getGridWidth() {
+        return GRID_WIDTH;
     }
-    // fonction reinitialiser grille
-// reinitialise la grille
-    public void reinitGrille() {
-        initGrille(grille0);
-    }
-    // fonction remplacement  caractere
-// remplace un caractere
-    public void remplacerCar(int y, int x, char c) {
-        grille[y].setCharAt(x, c);
-    }
-    // fonction Affichage de grille
-// Affiche la Grille
-    public void affiche() {
-        for (int i=0; i<grille.length; i++)
-            System.out.println(grille[i]);    
-    }
-    // Fonction comparatif de grille
-// Compare deux grilles
-    public Boolean comparer(Grille g2) {
-        for (int i=0; i<grille.length; i++)
-            if ((grille[i]).compareTo(g2.grille[i])!=0) return false;
-        return true;
-    }
-    public static void main(String[] args) {
-        Grille g = new Grille();
-        g.affiche();
-        g.remplacerCar(3,4,'#');
-        g.affiche();
-        g.reinitGrille();
-        g.affiche();
-    
-        String grilleTest[] = {
-            "+---------------+",
-            "|               |",
-            "|               |",
-            "|               |",
-            "|      #        |",
-            "|          #    |",
-            "|               |",
-            "|               |",
-            "|               |",
-            "|               |",
-            "|               |",
-            "|               |",
-            "|               |",
-            "+---------------+"
-            };
 
-    Grille g2= new Grille(grilleTest);
-    g.remplacerCar(4,7,'#');
-    g.remplacerCar(5,11,'#');
-    g.affiche();
-    Boolean eq = g.comparer(g2);
-    System.out.println(eq);    
+    /**
+     * Retourne le nombre de lignes dans la grille.
+     *
+     * @return Le nombre de lignes (hauteur de la grille)
+     */
+    public int getGridHeight() {
+        return GRID_HEIGHT;
+    }
+
+    /**
+     * Retourne la taille d'un bloc en pixels.
+     * Cette valeur est utilisée pour l'affichage graphique.
+     *
+     * @return La taille d'un bloc en pixels
+     */
+    public int getBlockSize() {
+        return BLOCK_SIZE;
+    }
+
+    /**
+     * Vérifie si une cellule spécifique (ligne, colonne) est occupée.
+     *
+     * @param row La ligne de la cellule
+     * @param col La colonne de la cellule
+     * @return true si la cellule est occupée, false sinon
+     */
+    public boolean isCellOccupied(int row, int col) {
+        return grid[row][col];
+    }
+
+    /**
+     * Définit l'état d'une cellule spécifique (occupée ou non).
+     *
+     * @param row      La ligne de la cellule
+     * @param col      La colonne de la cellule
+     * @param occupied true pour marquer la cellule comme occupée, false pour la libérer
+     */
+    public void setCellOccupied(int row, int col, boolean occupied) {
+        grid[row][col] = occupied;
+    }
+
+    /**
+     * Efface une ligne complète et fait descendre toutes les lignes au-dessus.
+     *
+     * @param row La ligne à effacer (complète)
+     */
+    public void clearLine(int row) {
+        // Parcourt toutes les lignes au-dessus de la ligne donnée, en partant du bas
+        for (int y = row; y > 0; y--) {
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                // Déplace chaque cellule de la ligne au-dessus vers la ligne actuelle
+                grid[y][x] = grid[y - 1][x];
+            }
+        }
+        // Vide la première ligne (en haut de la grille)
+        for (int x = 0; x < GRID_WIDTH; x++) {
+            grid[0][x] = false;
+        }
+    }
+
+    /**
+     * Réinitialise toute la grille en mettant toutes les cellules à `false` (vide).
+     */
+    public void reset() {
+        for (int y = 0; y < GRID_HEIGHT; y++) { // Parcourt toutes les lignes
+            for (int x = 0; x < GRID_WIDTH; x++) { // Parcourt toutes les colonnes
+                grid[y][x] = false; // Vide chaque cellule
+            }
+        }
     }
 }

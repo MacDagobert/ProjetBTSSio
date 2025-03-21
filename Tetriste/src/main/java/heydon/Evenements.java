@@ -3,97 +3,109 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package heydon;
-import javax.swing.*;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import javax.swing.*;
+import java.awt.event.*;
 
 /**
- *
- * @author Heydon Simon
- * @class Ecoute des Evenement clavier
- * @fonction Timer
- *
+ * Classe Evenements qui gère les événements du jeu Tetris.
+ * Cette classe s'occupe des interactions utilisateur via le clavier et du timer pour le déplacement automatique des tetrominos.
  */
 public class Evenements {
+    private Physics physics;
+    private Score score;
+    private Timer timer;
+    private GrillePanel panelJeu;
+    private int lignesEffectuees;
 
-//    public void touchePresse(KeyEvent e) {
-//        int keyCode = e.getKeyCode();
-//
-//        // Vérifie si la touche pressée est une touche directionnelle
-//        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN
-//                || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT) {
-//            System.out.println(true);  // Affiche true pour une touche directionnelle
-//        } else {
-//            System.out.println(false); // Affiche false pour une autre touche
-//        }
-//    }
     /**
-     * fonction fleche gauche : flecheGauche Ecoute le keyEvent
+     * Constructeur de la classe Evenements.
+     * Initialise la logique du jeu, le score, le panneau de jeu et configure un timer pour déplacer automatiquement les tetrominos.
+     *
+     * @param physics L'objet Physics qui gère la logique du jeu
+     * @param score   L'objet Score qui gère les points
+     * @param panelJeu Le panneau de jeu pour l'affichage graphique
      */
-    public void flecheGauche(KeyEvent e) {
-        int keyCode = e.getExtendedKeyCode();
+    public Evenements(Physics physics, Score score, GrillePanel panelJeu) {
+        this.physics = physics;
+        this.score = score;
+        this.panelJeu = panelJeu;
+        this.lignesEffectuees = 0;
 
-        if (keyCode == KeyEvent.VK_LEFT) {
-            System.out.println(true);
+        timer = new Timer(500, new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (physics.isGameOver()) {
+                    gameOver();
+                    return;
+                }
+        physics.moveTetrominoDown();
+        int lignesSupprimees = score.winpoint(); // Vérifie et met à jour le score en fonction des lignes complètes
+        if (lignesSupprimees > 0) {
+            System.out.println("Lignes supprimées : " + lignesSupprimees); // Message de débogage
+            lignesEffectuees += lignesSupprimees; // Met à jour le compteur local
+            panelJeu.ajouterLignesEffectuees(lignesSupprimees); // Met à jour les lignes dans GrillePanel
+            ajusterVitesseTimer(); // Ajuste la vitesse en fonction du niveau
         }
-
+        panelJeu.repaint(); // Redessine le panneau pour afficher les changements
+    }
+});
+    }
+    private void gameOver() {
+        timer.stop();
+        JOptionPane.showMessageDialog(panelJeu, "Game Over! Votre score : " + score.getScore(), 
+                                      "Game Over", 
+                                      JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
-     * fonction fleche droitee : flecheDauche Ecoute le keyEvent
+     * Ajuste la vitesse du timer en fonction du niveau actuel.
      */
-    public void flecheDroite(KeyEvent e) {
-        int keyCode = e.getExtendedKeyCode();
-
-        if (keyCode == KeyEvent.VK_RIGHT) {
-            System.out.println(true);
-        }
-
+    private void ajusterVitesseTimer() {
+        int niveau = (lignesEffectuees / 20) + 1;
+        int nouveauDelai = Math.max(100, 500 - (niveau - 1) * 50);
+        timer.setDelay(nouveauDelai);
     }
 
     /**
-     * fonction fleche bas : flecheBas Ecoute le keyEvent
+     * Démarre le timer pour faire descendre automatiquement les tetrominos.
      */
-    public void flecheBas(KeyEvent e) {
-        int keyCode = e.getExtendedKeyCode();
-
-        if (keyCode == KeyEvent.VK_DOWN) {
-            System.out.println(true);
-        }
-
+    public void start() {
+        timer.start();
     }
 
-    public static void main(String[] args) {
-        JFrame cadretimer = new JFrame(); //Le Frame qui contient le JPanel qui contient le JLabel timer
-        TimerTetriste timertetriste = new TimerTetriste(); // Le Jpanel timer
-        cadretimer.add(timertetriste); // FUUUUUSIOOOOON
+    /**
+     * Arrête le timer pour suspendre le déplacement automatique des tetrominos.
+     */
+    public void stop() {
+        timer.stop();
+    }
 
-        cadretimer.pack(); // le Jframe s'adapte au panel 
-        cadretimer.setVisible(true);// Pour afficher le tout
-        timertetriste.starttimer();
-        Evenements evenements = new Evenements();
-
-        JFrame frame = new JFrame("Test des événements clavier");
-
-        frame.addKeyListener(new KeyAdapter() {        //Permet composant graphique de reagir evenement de pression 
-            //KeyAddapter classe abstraite implemente keylistener et pas les autres methodes
-            public void keyPressed(KeyEvent e) {    //keyPressed seule méthode appelé 
-//                evenements.touchePresse(e);     // Tester la méthode générale pour les touches directionnelles
-                evenements.flecheGauche(e);     // Tester la flèche gauche
-                evenements.flecheDroite(e);     // Tester la flèche droite
-                evenements.flecheBas(e);        // Tester la flèche bas
+    /**
+     * Retourne un KeyAdapter qui gère les interactions clavier pour contrôler les tetrominos.
+     *
+     * @return Un KeyAdapter configuré pour répondre aux touches directionnelles
+     */
+    public KeyAdapter getKeyAdapter() {
+        return new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        physics.moveTetrominoLeft();
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        physics.moveTetrominoRight();
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        physics.moveTetrominoDown();
+                        break;
+                    case KeyEvent.VK_UP:
+                        physics.rotateTetromino();
+                        break;
+                }
+                panelJeu.repaint();
             }
-        });
-        frame.setSize(400, 300);  // Taille de la fenêtre
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fermer la fenêtre quand on clique 
-        frame.setVisible(true);   // Afficher la fenêtre
-
-        // Demander à la fenêtre de recevoir les événements clavier 
-        frame.requestFocusInWindow();
+        };
     }
 }
-

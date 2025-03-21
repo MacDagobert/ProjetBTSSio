@@ -1,10 +1,10 @@
-heydon\TimerTetriste.class
+heydon\Physics.class
+heydon\Score.class
+heydon\Evenements$2.class
 heydon\Grille.class
 heydon\Evenements.class
-heydon\Tetriste$2.class
 heydon\Tetromino.class
+heydon\GrillePanel.class
 heydon\Tetriste.class
 heydon\Tetriste$1.class
 heydon\Evenements$1.class
-heydon\Tetriste$TetrisPanel.class
-heydon\TimerTetriste$1.class
