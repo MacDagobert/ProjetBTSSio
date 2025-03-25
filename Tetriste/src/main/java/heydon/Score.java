@@ -4,15 +4,8 @@
  */
 package heydon;
 
-/**
- *
- * @author greta
- */
-/**
- * Classe Score qui gère le score du jeu Tetris. Cette classe est responsable de
- * l'incrémentation du score en fonction des lignes complètes et fournit des
- * méthodes pour récupérer et réinitialiser le score.
- */
+import heydon.database.ScoreManager;
+
 /**
  * Classe Score qui gère le score du jeu Tetris.
  * Cette classe est responsable de l'incrémentation du score en fonction des lignes complètes
@@ -22,6 +15,7 @@ public class Score {
 
     private int score; // Score actuel
     private Grille grille; // Référence à l'objet Grille pour vérifier les lignes complètes
+    private final ScoreManager scoreManager; // Pour sauvegarder les scores en base de données
 
     /**
      * Constructeur de la classe Score. Initialise le score à 0 et associe une
@@ -29,9 +23,10 @@ public class Score {
      *
      * @param grille L'objet Grille représentant la grille du jeu
      */
-    public Score(Grille grille) {
+    public Score(Grille grille, ScoreManager scoreManager) {
         this.grille = grille;
         this.score = 0; // Initialiser le score à 0
+        this.scoreManager = scoreManager;
     }
 
     /**
@@ -77,6 +72,7 @@ public class Score {
         }
 
         // Ajouter des points en fonction du nombre de lignes supprimées
+        int oldScore = score;
         switch (linesCleared) {
             case 1:
                 score += 100; // 100 points pour une seule ligne
@@ -92,6 +88,11 @@ public class Score {
                 break;
             default:
                 break; // Aucun point si aucune ligne n'a été supprimée
+        }
+        
+        // Met à jour le score dans le ScoreManager
+        if (score > oldScore) {
+            scoreManager.updateCurrentScore(score);
         }
 
         return linesCleared; // Retourne le nombre total de lignes supprimées
@@ -111,5 +112,13 @@ public class Score {
      */
     public void resetScore() {
         this.score = 0;
+        scoreManager.updateCurrentScore(0);
+    }
+    
+    /**
+     * Sauvegarde le score final dans la base de données.
+     */
+    public void saveScore() {
+        scoreManager.saveScore();
     }
 }

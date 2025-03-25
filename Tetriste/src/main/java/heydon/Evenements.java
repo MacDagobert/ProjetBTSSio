@@ -53,9 +53,13 @@ public class Evenements {
     }
     private void gameOver() {
         timer.stop();
-        JOptionPane.showMessageDialog(panelJeu, "Game Over! Votre score : " + score.getScore(), 
-                                      "Game Over", 
-                                      JOptionPane.INFORMATION_MESSAGE);
+        // Sauvegarde le score final
+        score.saveScore();
+        
+        JOptionPane.showMessageDialog(panelJeu, 
+            "Game Over!\nVotre score : " + score.getScore() + "\nScore sauvegardé !", 
+            "Game Over", 
+            JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
