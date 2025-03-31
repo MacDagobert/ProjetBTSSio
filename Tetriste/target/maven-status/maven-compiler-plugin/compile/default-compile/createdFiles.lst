@@ -5,5 +5,6 @@ heydon\Physics.class
 heydon\Score.class
 heydon\Evenements$2.class
 heydon\Evenements.class
+heydon\BCrypt.class
 heydon\GrillePanel.class
 heydon\Tetriste.class

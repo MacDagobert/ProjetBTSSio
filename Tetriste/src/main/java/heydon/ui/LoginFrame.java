@@ -3,6 +3,7 @@ package heydon.ui;
 import heydon.database.DatabaseConnection;
 import heydon.database.ScoreManager;
 import heydon.Tetriste;
+import heydon.BCrypt;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,22 +123,28 @@ public class LoginFrame extends JFrame {
         }
     }
     
-    private boolean authenticatePlayer(String pseudo, String password) throws SQLException {
-        String sql = "SELECT password FROM joueurs WHERE pseudo = ? AND password = ?";
+private boolean authenticatePlayer(String pseudo, String password) throws SQLException {
+    String sql = "SELECT password FROM joueurs WHERE pseudo = ?";
+    
+    try (Connection conn = dbConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
         
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, pseudo);
-            pstmt.setString(2, password);
-            
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next(); // Retourne true si un joueur est trouvé
+        pstmt.setString(1, pseudo);
+        
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                // Récupère le mot de passe haché depuis la base
+                String hashedPassword = rs.getString("password");
+                System.out.println("Mot de passe haché récupéré : " + hashedPassword);
+                
+                // Vérifie si le mot de passe saisi correspond au hachage
+                return BCrypt.checkpw(password, hashedPassword);
             }
         }
     }
     
+    return false; // Retourne false si aucun utilisateur n'est trouvé
+}
     private void startGame() {
         this.dispose(); // Ferme la fenêtre de connexion
         SwingUtilities.invokeLater(() -> {
