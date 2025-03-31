@@ -5,7 +5,7 @@ CREATE TABLE joueurs (
     pseudo VARCHAR(50),
     email VARCHAR(50),
     date_inscription DATE,
-    password VARCHAR(24),
+    password VARCHAR(128),
     compteur INT,
     PRIMARY KEY (id_joueur)
 ) ENGINE=InnoDB;
