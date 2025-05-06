@@ -285,6 +285,8 @@ function mouvementValide(dx, dy, pc) {
     }
     return true;
 }
+
+// pause
 function fixerPiece() {
     let collision = false;
 

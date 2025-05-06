@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +8,11 @@
 </head>
 <body>
     <?php require_once(__DIR__ . '/header.php'); ?>
+
+    <pre id="jeu"></pre>
     <div id="gameOverMessage">
         Game Over
     </div>
-    <pre id="jeu"></pre>
     <div id="score">Score : 0</div>
     <div class="button-container">
         <!-- Bouton Se connecter -->
