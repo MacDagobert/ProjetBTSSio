@@ -27,6 +27,7 @@ $isLoggedIn = isset($_SESSION['LOGGED_USER']);
 <body>
     <?php require_once(__DIR__ . '/header.php'); ?>
 
+    <div class="container1">
     <div class="button-container">
         <?php if ($isLoggedIn): ?>
             <!-- Afficher les informations utilisateur et le bouton Déconnexion -->
@@ -39,6 +40,7 @@ $isLoggedIn = isset($_SESSION['LOGGED_USER']);
             <button id="btnRegister" type="button" onclick="window.location.href='register.php'">Enregistre toi sur notre base de donnée HYPER sécurisée</button>
             <button type="button" onclick="window.location.href='login.php'">Se connecter</button>
         <?php endif; ?>
+    </div> 
     </div>
 
     <script src="../site/script.js" defer></script>

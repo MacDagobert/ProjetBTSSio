@@ -15,10 +15,10 @@ if (isset($_SESSION['LOGGED_USER'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <link rel="stylesheet" href="chemin/vers/votre/css/style.css">
+    <link rel="stylesheet" href="../Site/style.css">
 </head>
 <body>
-    <h2>Connexion</h2>
+
 
     <?php
     // Affiche les messages d'erreur si présents
@@ -31,6 +31,8 @@ if (isset($_SESSION['LOGGED_USER'])) {
     ?>
 
     <form action="submit_login.php" method="POST">
+    <div class="container1">
+    <h2>Connexion</h2>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" aria-describedby="email-help" placeholder="you@exemple.com" required>
@@ -40,7 +42,8 @@ if (isset($_SESSION['LOGGED_USER'])) {
             <label for="password" class="form-label">Mot de passe</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary">Se connecter</button>
+        <button type="submit" class="button">Se connecter</button>
+        </div>
     </form>
 </body>
 </html>

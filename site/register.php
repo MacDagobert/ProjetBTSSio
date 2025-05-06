@@ -1,14 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="../Site/style.css">
+</head>
+<body>
+
 <?php
 session_start();
 if (isset($_SESSION['REGISTER_ERROR_MESSAGE'])) {
-    echo '<div class="alert alert-danger">' . $_SESSION['REGISTER_ERROR_MESSAGE'] . '</div>';
+    echo '<div class="error-message">' . $_SESSION['REGISTER_ERROR_MESSAGE'] . '</div>';
     unset($_SESSION['REGISTER_ERROR_MESSAGE']);
 }
 ?>
+
 <form action="submit_register.php" method="POST">
+<div class="container1">
     <!-- si message d'erreur on l'affiche -->
     <?php if (isset($_SESSION['LOGIN_ERROR_MESSAGE'])) : ?>
-        <div class="alert alert-danger" role="alert">
+        <div class="error-message" role="alert">
             <?php echo $_SESSION['LOGIN_ERROR_MESSAGE'];
             unset($_SESSION['LOGIN_ERROR_MESSAGE']); ?>
         </div>
@@ -31,6 +43,7 @@ if (isset($_SESSION['REGISTER_ERROR_MESSAGE'])) {
     <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudo-help" placeholder="Votre pseudo">
     <div id="pseudo-help" class="form-text">Choisissez un pseudo pour votre compte</div>
 </div>
+</div>
 
 <input type="hidden" name="date_inscription" value="<?php echo date('Y-m-d'); ?>">
     <button type="submit" class="btn btn-primary">Envoyer</button>
@@ -46,3 +59,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
     }
 });
 </script>
+
+</body>
+</html>
