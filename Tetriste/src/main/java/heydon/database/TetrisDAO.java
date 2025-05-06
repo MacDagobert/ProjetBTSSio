@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe DAO pour gérer les opérations de base de données du jeu Tetris.
- * Utilise le pattern DAO pour séparer la logique d'accès aux données.
+ * Classe DAO (Data Access Object) pour la gestion des scores du jeu Tetris.
+ * Implémente le pattern DAO pour séparer la logique métier de l'accès aux données.
  */
 public class TetrisDAO {
-    private final DatabaseConnection dbConnection;
+    private final DatabaseConnection dbConnection; // Connexion à la base de données
     
     /**
-     * Constructeur du DAO.
+     * Constructeur initialisant la connexion à la base de données.
+     * Utilise le singleton DatabaseConnection pour obtenir l'instance unique.
      */
     public TetrisDAO() {
         this.dbConnection = DatabaseConnection.getInstance();
@@ -20,11 +21,11 @@ public class TetrisDAO {
     
     /**
      * Sauvegarde un nouveau score dans la base de données.
-     * @param playerName Nom du joueur
-     * @param score Score obtenu
-     * @param level Niveau atteint
-     * @param linesCleared Nombre de lignes complétées
-     * @return true si la sauvegarde a réussi, false sinon
+     * @param playerName Nom du joueur (non null)
+     * @param score Score obtenu (entier positif)
+     * @param level Niveau atteint (entier positif)
+     * @param linesCleared Nombre de lignes complétées (entier positif)
+     * @return true si la sauvegarde réussit, false sinon
      */
     public boolean saveScore(String playerName, int score, int level, int linesCleared) {
         String sql = "INSERT INTO scores (player_name, score, level, lines_cleared, date_played) VALUES (?, ?, ?, ?, NOW())";
@@ -32,6 +33,7 @@ public class TetrisDAO {
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Paramétrage de la requête SQL
             pstmt.setString(1, playerName);
             pstmt.setInt(2, score);
             pstmt.setInt(3, level);
@@ -47,9 +49,9 @@ public class TetrisDAO {
     }
     
     /**
-     * Récupère les meilleurs scores.
-     * @param limit Nombre de scores à récupérer
-     * @return Liste des meilleurs scores
+     * Récupère les meilleurs scores depuis la base de données.
+     * @param limit Nombre maximum de scores à retourner (entier > 0)
+     * @return Liste des ScoreRecord triés par score décroissant
      */
     public List<ScoreRecord> getTopScores(int limit) {
         List<ScoreRecord> scores = new ArrayList<>();
@@ -61,6 +63,7 @@ public class TetrisDAO {
             pstmt.setInt(1, limit);
             ResultSet rs = pstmt.executeQuery();
             
+            // Conversion des résultats en objets ScoreRecord
             while (rs.next()) {
                 scores.add(new ScoreRecord(
                     rs.getString("player_name"),
@@ -79,9 +82,9 @@ public class TetrisDAO {
     }
     
     /**
-     * Récupère le meilleur score d'un joueur.
-     * @param playerName Nom du joueur
-     * @return Le meilleur score du joueur ou null si aucun score trouvé
+     * Recherche le meilleur score d'un joueur spécifique.
+     * @param playerName Nom du joueur à rechercher (non null)
+     * @return ScoreRecord contenant le meilleur score ou null si non trouvé
      */
     public ScoreRecord getPlayerBestScore(String playerName) {
         String sql = "SELECT * FROM scores WHERE player_name = ? ORDER BY score DESC LIMIT 1";
@@ -110,12 +113,12 @@ public class TetrisDAO {
     }
     
     /**
-     * Met à jour le score d'un joueur si le nouveau score est meilleur.
-     * @param scoreId ID du score à mettre à jour
-     * @param newScore Nouveau score
-     * @param newLevel Nouveau niveau
+     * Met à jour un score existant si le nouveau score est supérieur à l'ancien.
+     * @param scoreId Identifiant unique du score à mettre à jour
+     * @param newScore Nouvelle valeur du score
+     * @param newLevel Nouveau niveau atteint
      * @param newLinesCleared Nouveau nombre de lignes complétées
-     * @return true si la mise à jour a réussi, false sinon
+     * @return true si la mise à jour est effectuée, false sinon
      */
     public boolean updateScore(int scoreId, int newScore, int newLevel, int newLinesCleared) {
         String sql = "UPDATE scores SET score = ?, level = ?, lines_cleared = ? WHERE id = ? AND score < ?";
@@ -127,7 +130,7 @@ public class TetrisDAO {
             pstmt.setInt(2, newLevel);
             pstmt.setInt(3, newLinesCleared);
             pstmt.setInt(4, scoreId);
-            pstmt.setInt(5, newScore);
+            pstmt.setInt(5, newScore); // Condition de mise à jour
             
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
@@ -139,7 +142,8 @@ public class TetrisDAO {
     }
     
     /**
-     * Classe interne représentant un enregistrement de score.
+     * Classe interne représentant un enregistrement de score complet.
+     * Utilisée pour transporter les données entre la couche DAO et le reste de l'application.
      */
     public static class ScoreRecord {
         private final String playerName;
@@ -148,6 +152,14 @@ public class TetrisDAO {
         private final int linesCleared;
         private final Timestamp datePlayed;
         
+        /**
+         * Constructeur pour créer un enregistrement de score.
+         * @param playerName Nom du joueur
+         * @param score Score total
+         * @param level Niveau atteint
+         * @param linesCleared Lignes complétées
+         * @param datePlayed Date et heure de la partie
+         */
         public ScoreRecord(String playerName, int score, int level, int linesCleared, Timestamp datePlayed) {
             this.playerName = playerName;
             this.score = score;
@@ -156,13 +168,18 @@ public class TetrisDAO {
             this.datePlayed = datePlayed;
         }
         
-        // Getters
+        // ------------------- Getters -------------------
+        
         public String getPlayerName() { return playerName; }
         public int getScore() { return score; }
         public int getLevel() { return level; }
         public int getLinesCleared() { return linesCleared; }
         public Timestamp getDatePlayed() { return datePlayed; }
         
+        /**
+         * Représentation textuelle du score pour le débogage.
+         * @return Chaîne formatée contenant toutes les informations du score
+         */
         @Override
         public String toString() {
             return String.format(

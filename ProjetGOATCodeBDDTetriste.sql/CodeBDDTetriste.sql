@@ -1,0 +1,54 @@
+
+DROP TABLE IF EXISTS joueurs;
+CREATE TABLE joueurs (
+    id_joueur INT AUTO_INCREMENT NOT NULL,
+    pseudo VARCHAR(50),
+    email VARCHAR(50),
+    date_inscription DATE,
+    password VARCHAR(24),
+    compteur INT,
+    PRIMARY KEY (id_joueur)
+) ENGINE=InnoDB;
+
+
+DROP TABLE IF EXISTS partie;
+CREATE TABLE partie (
+    id_partie BIGINT AUTO_INCREMENT NOT NULL,
+    date_partie DATETIME,
+    temps_partie TIME,
+    type_partie VARCHAR(15),
+    id_joueur INT NOT NULL,  
+    PRIMARY KEY (id_partie),
+    CONSTRAINT fk_joueur
+        FOREIGN KEY (id_joueur)  
+        REFERENCES joueurs(id_joueur)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+DROP TABLE IF EXISTS score;
+CREATE TABLE score (
+    id_score BIGINT AUTO_INCREMENT NOT NULL,
+    total_points BIGINT,
+    niveau_max BIGINT,
+    id_partie BIGINT NOT NULL,
+    PRIMARY KEY (id_score),
+    CONSTRAINT fk_partie
+        FOREIGN KEY (id_partie) 
+        REFERENCES partie(id_partie)
+        ON DELETE CASCADE  
+) ENGINE=InnoDB;
+
+
+DROP TABLE IF EXISTS connexion;
+CREATE TABLE connexion (
+    id_connexion INT AUTO_INCREMENT NOT NULL,
+    id_joueur INT NOT NULL,
+    date_connexion DATETIME,
+    status TINYINT DEFAULT 0, -- 0 pour faux, 1 pour vrai
+    PRIMARY KEY (id_connexion),
+    CONSTRAINT fk_joueur_connexion
+        FOREIGN KEY (id_joueur) 
+        REFERENCES joueurs(id_joueur)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
