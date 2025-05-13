@@ -1,7 +1,9 @@
 package heydon;
 
 import javax.swing.*;
+import java.awt.BorderLayout;
 import heydon.database.ScoreManager;
+import java.awt.Dimension;
 
 /**
  * Classe principale du jeu Tetris.
@@ -31,6 +33,29 @@ public class Tetriste {
 
         // Création du panneau graphique qui affiche le jeu
         GrillePanel panelJeu = new GrillePanel(grille, physics, score);
+
+  
+        // Création d'un panneau principal pour organiser les composants
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(panelJeu, BorderLayout.CENTER); // Grille au centre
+
+         // Création du panneau d'options
+         JPanel optionsPanel = new JPanel();
+         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS)); // Disposition verticale
+         optionsPanel.setPreferredSize(new Dimension(150, 0)); // Largeur fixe pour le panneau d'options
+
+         // Ajout du bouton de disparition
+         JCheckBox disparitionCheckBox = new JCheckBox("Activer disparition");
+         disparitionCheckBox.setFocusable(false);
+         optionsPanel.add(disparitionCheckBox);
+
+         // Ajout d'autres options (si nécessaire)
+         optionsPanel.add(Box.createVerticalStrut(10)); // Espacement
+         JButton autreOption = new JButton("Autre option");
+         optionsPanel.add(autreOption);
+
+         // Ajout du panneau d'options au panneau principal
+         mainPanel.add(optionsPanel, BorderLayout.WEST); // Panneau d'options à gauche
 
         // Création de l'objet Evenements qui gère les événements du jeu (clavier, timer)
         Evenements evenements = new Evenements(physics, score, panelJeu);

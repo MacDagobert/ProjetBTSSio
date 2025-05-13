@@ -1,28 +1,15 @@
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\GrillePanel.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\com\mycompany\tetriste2\Grille.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\dao\JoueurDAO.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\com\mycompany\tetriste2\Score.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\com\mycompany\tetriste2\Physics.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\ui\LoginFrame.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\ScoreManager.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\DatabaseConnection.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\BCrypt.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\model\Score.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\Evenements.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\com\mycompany\tetriste2\Tetromino.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\TestConnection.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\Grille.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\NextPiecePanel.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\Physics.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\com\mycompany\tetriste2\Tetriste2.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\dao\DAO.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\ui\Accueil.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\Tetromino.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\model\Connexion.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\model\Joueur.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\Score.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\TetrisDAO.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\database\model\Partie.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\NextPiece.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\com\mycompany\tetriste2\GrillePanel.java
-C:\Users\Victor\Documents\NetBeansProjects\Tetriste2\src\main\java\heydon\Tetriste.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Physics.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\database\TestConnection.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Evenements.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\BCrypt.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Shadow.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Grille.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\NextPiecePanel.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Tetromino.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\ui\LoginFrame.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\ui\Accueil.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\GrillePanel.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Score.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\Tetriste.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\database\ScoreManager.java
+C:\Users\SIO courant\Documents\NetBeansProjects\Tetriste\src\main\java\heydon\database\DatabaseConnection.java

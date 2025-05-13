@@ -1,7 +1,5 @@
 package heydon.ui;
 
-import com.mycompany.tetriste2.Grille;
-import com.mycompany.tetriste2.GrillePanel;
 import static heydon.Tetriste.startGame;
 import heydon.database.ScoreManager;
 import java.awt.BorderLayout;
@@ -63,7 +61,7 @@ public class Accueil {
                 String totalPoints = resultSet.getString("total_points");
                 // Utilisation d'un ScoreManager pour récupérer le meilleur score
                 ScoreManager scoreManager = new ScoreManager();
-                label.setText("votre meilleure score est de " + scoreManager.getBestScore());
+                label.setText("vos 5 meilleurs score sont " + scoreManager.getBestScore());
             }
         } catch (SQLException e) {
             // En cas d'erreur SQL, afficher un message d'erreur dans le label

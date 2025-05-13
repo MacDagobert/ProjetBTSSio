@@ -5,7 +5,6 @@ import heydon.database.ScoreManager;
 import heydon.Tetriste;
 import heydon.BCrypt;
 
-import javax.swing.JTextField;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
